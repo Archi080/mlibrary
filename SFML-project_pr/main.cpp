@@ -7,11 +7,13 @@
 #include "TextButton.h"
 #include "TextBox.h"
 #include "DetailsRenderer.h"
+#include "DBManager.h"
 using json = nlohmann::json;
 
 #define UI_SCALE 0.9f
 
 int main() {
+    DBManager dbmanager;
     
     //Настройки окна программы
     sf::String title = L"Фильмотека";
