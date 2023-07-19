@@ -25,7 +25,7 @@ public:
 		const string password = "Root17!_";
 
 		sql::Driver* driver;
-
+		//sql::Statement* stmt;
 
 		try
 		{
@@ -43,12 +43,7 @@ public:
 		auto rs = dbcon_meta->getSchemas();
 		int row = 1;
 
-		while (rs->next()) {
-			cout << "\t" << row << ". " << rs->getString("TABLE_SCHEM") << endl;
-			++row;
-		} // while
-
-		/*try {
+		try {
 			con->setSchema("quickstartdb");
 		}
 		catch (sql::SQLException e)
@@ -58,8 +53,63 @@ public:
 			exit(1);
 		}
 
-		stmt = con->createStatement();*/
+
+		//while (rs->next()) {
+		//	cout << "\t" << row << ". " << rs->getString("TABLE_SCHEM") << endl;
+		//	++row;
+		//} // while
+
 	};
+	void GetRow() {
+		
+		auto stmt = con->createStatement();
+		auto result = stmt->executeQuery("SELECT * FROM actors");
+		while (result->next()) {
+			cout << "\t" <<  result->getInt("id") << endl;
+		} // while
+	}
+	List<Human>* GetPeople() {
+		auto stmt = con->createStatement();
+		auto result = stmt->executeQuery("SELECT * FROM people");
+		List<Human>* people = new List<Human>;
+		while (result->next()) {
+			auto NewHuman = new Human(result->getString("name").asStdString(),
+				result->getString("surname").asStdString(),
+				result->getInt("id"));
+
+			NewHuman->setBio(result->getString("bio").asStdString());
+			NewHuman->setPortrait(result->getString("portrait").asStdString());
+			people->add(NewHuman);
+		}
+		return people;
+	}
+	void GetMovies(List<Human>* people) {
+		auto stmt = con->createStatement();
+		auto result = stmt->executeQuery("SELECT * FROM movies");
+		List<Movie> movies;
+		while (result->next()) {
+			auto NewMovie = new Movie(result->getString("title").asStdString(),
+				result->getInt("year"),
+				result->getInt("id"));
+			NewMovie->setSynopsis(result->getString("synopsis").asStdString());
+			NewMovie->setCountries(result->getString("countries").asStdString());
+			NewMovie->setBudget(result->getInt64("budgetUSD"));
+			NewMovie->setBoxOffice(result->getInt64("boxOfficeUSD"));
+			NewMovie->setRate(result->getDouble("rate"));
+			NewMovie->setFilmPath(result->getString("filmPath").asStdString());
+			NewMovie->setPoster(result->getString("poster").asStdString());
+			auto directorId = result->getInt("director_id");
+			auto directorLambda{ [=](Human *human) -> bool {return (human->getId() == directorId); }};
+			auto director = people->firstWhere(directorLambda);
+			director->addMovie(NewMovie);
+			director->setDirector(true);
+			NewMovie->setDirector(director);
+			movies.add(NewMovie);
+			/*NewHuman->setBio(result->getString("bio").asStdString());
+			NewHuman->setPortrait(result->getString("portrait").asStdString());
+			people->add(NewHuman);*/
+		}
+	}
 private:
 	sql::Connection* con;
 

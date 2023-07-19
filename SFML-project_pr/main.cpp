@@ -13,7 +13,6 @@ using json = nlohmann::json;
 #define UI_SCALE 0.9f
 
 int main() {
-    DBManager dbmanager;
     
     //Настройки окна программы
     sf::String title = L"Фильмотека";
@@ -103,8 +102,12 @@ int main() {
     DetailsRenderer details(&helveticaNeue_Bold, &helveticaNeue_Medium, &helveticaNeue_Regular, &helveticaNeue_Light, UI_SCALE);
 
     //Загружаем базу данных из файла
+    DBManager dbmanager;
+    //dbmanager.GetRow();
     List<Human>* database;
-    database = deserializeJSON(loadFromFile("C:\\Users\\Admin\\Desktop\\MovieLibrary\\resources\\input.json"));
+    //database = deserializeJSON(loadFromFile("C:\\Users\\Admin\\Desktop\\MovieLibrary\\resources\\input.json"));
+    database = dbmanager.GetPeople();
+    dbmanager.GetMovies(database);
 
     horizontalMovieScroller searchResults(123 * UI_SCALE, 176 * UI_SCALE, 1300 * UI_SCALE, sf::Color(65, 65, 65));
     searchResults.setPosition(86 * UI_SCALE, 107 * UI_SCALE);

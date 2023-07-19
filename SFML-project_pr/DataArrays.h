@@ -1,6 +1,6 @@
 
 #include "MoviesException.h"
-
+#include <functional>
 #ifndef MOVIELIBRARY_LIST_H
 #define MOVIELIBRARY_LIST_H
 
@@ -214,7 +214,15 @@ public:
         }
         return current->data;
     }
-
+    //Найти первый элемент, удовлетворяющий лямбда выражению
+    T* firstWhere(const std::function<bool(T*)>& f) {
+        auto current = this->first;
+        while(current != nullptr){
+            if (f(current->data)) return current->data;
+            current = current->next;
+        }
+        return nullptr;
+    }
     //Переопределение оператора +=
     void operator+=(List<T> list){
         for (int i = 0; i < list.getSize(); i++){
