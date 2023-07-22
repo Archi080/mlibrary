@@ -42,17 +42,17 @@ public:
         return this->countries;
     }
 
-    void setBudget(long USD){
+    void setBudget(int64_t USD){
         this->budgetUSD = USD;
     }
-    long getBudgetUSD() const{
+    int64_t getBudgetUSD() const{
         return this->budgetUSD;
     }
 
-    void setBoxOffice(long USD){
+    void setBoxOffice(int64_t USD){
         this->boxOfficeUSD = USD;
     }
-    long getBoxOfficeUSD() const{
+    int64_t getBoxOfficeUSD() const{
         return this->boxOfficeUSD;
     }
 
@@ -111,8 +111,8 @@ private:
     int year;
     std::string countries;
     Human * director = nullptr;
-    long budgetUSD = 0;
-    long boxOfficeUSD = 0;
+    int64_t budgetUSD = 0;
+    int64_t boxOfficeUSD = 0;
     float rate = 0.0f;
     CircularList<Human> actors;
     sf::Texture poster;

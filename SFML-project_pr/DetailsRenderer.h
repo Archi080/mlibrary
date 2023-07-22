@@ -229,6 +229,34 @@ private:
         return result;
     }
 
+    /*static std::string toString(long number, bool money = false) {
+        std::string result;
+        int digits = 0;
+        while (number != 0) {
+            if (digits % 3 == 0 && money) {
+                result = " " + result;
+            }
+            result = (char)((number % 10) + 48) + result;
+            number /= 10;
+            digits++;
+        }
+        if (money && !result.empty()) result = "$" + result;
+        return result;
+    }*/
+    static std::string toString(int64_t number, bool money = false) {
+        std::string result;
+        int digits = 0;
+        while (number != 0) {
+            if (digits % 3 == 0 && money) {
+                result = " " + result;
+            }
+            result = (char)((number % 10) + 48) + result;
+            number /= 10;
+            digits++;
+        }
+        if (money && !result.empty()) result = "$" + result;
+        return result;
+    }
     static sf::String fromUtf8(const std::string & string){
         return sf::String::fromUtf8(string.begin(), string.end());
     }

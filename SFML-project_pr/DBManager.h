@@ -52,13 +52,10 @@ public:
 			system("pause");
 			exit(1);
 		}
-
-
 		//while (rs->next()) {
 		//	cout << "\t" << row << ". " << rs->getString("TABLE_SCHEM") << endl;
 		//	++row;
 		//} // while
-
 	};
 	void GetRow() {
 		
@@ -104,13 +101,26 @@ public:
 			director->addMovie(NewMovie);
 			director->setDirector(true);
 			NewMovie->setDirector(director);
+			auto actorsResult = stmt->executeQuery("SELECT * FROM movies_actors WHERE movie_id = " + to_string(NewMovie->getId()));
+			while (actorsResult->next()) {
+				auto actorId = actorsResult->getInt("actor_id");
+				auto actorLambda{ [=](Human* human) -> bool {return (human->getId() == actorId); } };
+				auto actor = people->firstWhere(actorLambda);
+				actor->addMovie(NewMovie);
+				NewMovie->addActor(actor);
+			}
+
 			movies.add(NewMovie);
 			/*NewHuman->setBio(result->getString("bio").asStdString());
 			NewHuman->setPortrait(result->getString("portrait").asStdString());
 			people->add(NewHuman);*/
 		}
 	}
+	/*void ConnectActors(List<Human>* people) {
+		auto stmt = con->createStatement();
+		auto result = stmt->executeQuery("SELECT * FROM movies_actors");
+
+	}*/
 private:
 	sql::Connection* con;
-
 };

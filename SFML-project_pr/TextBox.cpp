@@ -9,7 +9,7 @@ TextBox::TextBox(sf::Texture * texture, float height, sf::Color textColor, sf::C
     float scale = height / texture->getSize().y;
     background.setSize(sf::Vector2f(texture->getSize().x * scale, texture->getSize().y * scale));
     background.setTexture(texture);
-    textbox.setCharacterSize(/*height/2*/34);
+    textbox.setCharacterSize(height/2);
     textbox.setFillColor(hintColor);
     this->hintColor = hintColor;
     this->textColor = textColor;

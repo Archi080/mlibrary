@@ -56,14 +56,15 @@ int main() {
 
     //Подключаем файлы текстур
     sf::Texture searchTexture;
-    sf::Texture addButtonTexture;
+   /* sf::Texture addButtonTexture;
     sf::Texture editButtonTexture;
-    sf::Texture deleteButtonTexture;
+    sf::Texture deleteButtonTexture;*/
    
     if (!(searchTexture.loadFromFile("C:\\Users\\Admin\\Desktop\\MovieLibrary\\resources\\textures\\textBox_texture.png")
-        && addButtonTexture.loadFromFile("C:\\Users\\Admin\\Desktop\\MovieLibrary\\resources\\textures\\plus.png")
-        && editButtonTexture.loadFromFile("C:\\Users\\Admin\\Desktop\\MovieLibrary\\resources\\textures\\edit.png")
-        && deleteButtonTexture.loadFromFile("C:\\Users\\Admin\\Desktop\\MovieLibrary\\resources\\textures\\delete.png"))) {
+  //      && addButtonTexture.loadFromFile("C:\\Users\\Admin\\Desktop\\MovieLibrary\\resources\\textures\\plus.png")
+  //      && editButtonTexture.loadFromFile("C:\\Users\\Admin\\Desktop\\MovieLibrary\\resources\\textures\\edit.png")
+ //       && deleteButtonTexture.loadFromFile("C:\\Users\\Admin\\Desktop\\MovieLibrary\\resources\\textures\\delete.png")
+        )) {
         throw res_file_not_loaded();
     }
 
@@ -88,14 +89,14 @@ int main() {
     searchType.setArrowCursor(&arrowCursor);
     searchType.setHandCursor(&handCursor);
 
-    Button addButton(&addButtonTexture, 24 * UI_SCALE);
-    addButton.setPosition(sf::Vector2f(952 * UI_SCALE, 50.5f * UI_SCALE));
+    //Button addButton(&addButtonTexture, 24 * UI_SCALE);
+    //addButton.setPosition(sf::Vector2f(952 * UI_SCALE, 50.5f * UI_SCALE));
 
-    Button editButton(&editButtonTexture, 24 * UI_SCALE);
-    editButton.setPosition(sf::Vector2f(872 * UI_SCALE, 50.5f * UI_SCALE));
+    //Button editButton(&editButtonTexture, 24 * UI_SCALE);
+    //editButton.setPosition(sf::Vector2f(872 * UI_SCALE, 50.5f * UI_SCALE));
 
-    Button deleteButton(&deleteButtonTexture, 24 * UI_SCALE);
-    deleteButton.setPosition(sf::Vector2f(912 * UI_SCALE, 50.5f * UI_SCALE));
+    //Button deleteButton(&deleteButtonTexture, 24 * UI_SCALE);
+    //deleteButton.setPosition(sf::Vector2f(912 * UI_SCALE, 50.5f * UI_SCALE));
 
     
 
@@ -141,35 +142,35 @@ int main() {
                 else if (details.isMouseOverScroller(sf::Mouse::getPosition(window))) {
                     details.clickHandler(true, sf::Mouse::getPosition(window));
                 }
-                else if (addButton.isMouseOver(window)) {
-                    auto newMovie = createNewMovie(UI_SCALE, &helveticaNeue_Medium);
-                    if (newMovie) {
-                        newMovie->setDirector(details.getLastRenderedHuman());
-                        details.getLastRenderedHuman()->addMovie(newMovie);
-                        details.render(newMovie);
-                        searchResults.clear();
-                        //TODO: Вынести в отдельную функцию?
-                        for (int i = 0; i < database->getSize(); i++) {
-                            if (!database->operator[](i)->isDirector()) continue;
-                            for (int j = 0; j < database->operator[](i)->getMovies().getSize(); j++) {
-                                searchResults.addMovie(database->operator[](i)->getMovies().operator[](j));
-                            }
-                        }
-                    }
+                //else if (addButton.isMouseOver(window)) {
+                //    auto newMovie = createNewMovie(UI_SCALE, &helveticaNeue_Medium);
+                //    if (newMovie) {
+                //        newMovie->setDirector(details.getLastRenderedHuman());
+                //        details.getLastRenderedHuman()->addMovie(newMovie);
+                //        details.render(newMovie);
+                //        searchResults.clear();
+                //        //TODO: Вынести в отдельную функцию?
+                //        for (int i = 0; i < database->getSize(); i++) {
+                //            if (!database->operator[](i)->isDirector()) continue;
+                //            for (int j = 0; j < database->operator[](i)->getMovies().getSize(); j++) {
+                //                searchResults.addMovie(database->operator[](i)->getMovies().operator[](j));
+                //            }
+                //        }
+                //    }
 
-                }
-                else if (editButton.isMouseOver(window)) {
-                    editMovie(details.getLastRenderedMovie(), database, UI_SCALE, &helveticaNeue_Medium);
-                    details.render(details.getLastRenderedMovie());
-                    searchResults.clear();
-                    //TODO: Вынести в отдельную функцию?
-                    for (int i = 0; i < database->getSize(); i++) {
-                        if (!database->operator[](i)->isDirector()) continue;
-                        for (int j = 0; j < database->operator[](i)->getMovies().getSize(); j++) {
-                            searchResults.addMovie(database->operator[](i)->getMovies().operator[](j));
-                        }
-                    }
-                }
+                //}
+                //else if (editButton.isMouseOver(window)) {
+                //    editMovie(details.getLastRenderedMovie(), database, UI_SCALE, &helveticaNeue_Medium);
+                //    details.render(details.getLastRenderedMovie());
+                //    searchResults.clear();
+                //    //TODO: Вынести в отдельную функцию?
+                //    for (int i = 0; i < database->getSize(); i++) {
+                //        if (!database->operator[](i)->isDirector()) continue;
+                //        for (int j = 0; j < database->operator[](i)->getMovies().getSize(); j++) {
+                //            searchResults.addMovie(database->operator[](i)->getMovies().operator[](j));
+                //        }
+                //    }
+                //}
                 else {
                     searchBox.setSelected(false);
                 }
@@ -202,9 +203,9 @@ int main() {
         searchResults.onDrag(sf::Mouse::getPosition(window).x);
         details.clickHandler(sf::Mouse::getPosition(window));
         searchResults.draw(window);
-        addButton.drawTo(window);
-        editButton.drawTo(window);
-        deleteButton.drawTo(window);
+        //addButton.drawTo(window);
+        //editButton.drawTo(window);
+        //deleteButton.drawTo(window);
         window.display();
     }
     writeToFile("C:\\Users\\Admin\\Desktop\\MovieLibrary\\resources\\output.json", serializeJSON(database).dump(4));

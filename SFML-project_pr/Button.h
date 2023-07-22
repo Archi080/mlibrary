@@ -1,7 +1,3 @@
-//
-// Created by Максим Лейхнер on 26.12.2022.
-//
-
 #ifndef MOVIELIBRARY_BUTTON_H
 #define MOVIELIBRARY_BUTTON_H
 
